@@ -34,6 +34,26 @@
     ?>
 
 
+<?php
+    $showAlert = false;
+    $method = $_SERVER['REQUEST_METHOD'];
+    if($method == 'POST'){
+        //Insert thread into db
+        $comment =$_POST['comment'];
+       
+        $sql = "INSERT INTO `comments` ( `comment_content`, `thread_id`, `comment_by`, `comment_time`) VALUES ('$comment', '$id', '0', current_timestamp())";
+        $result = mysqli_query($conn, $sql);
+        $showAlert = true;
+        if($showAlert){
+            echo'<div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success! </strong> Your comment has been added! 
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>';
+        }
+    }
+    ?>
+
+
     <div class="container my-4">
         <div class="jumbotron p-5 mb-4 bg-light border rounded-3">
             <h1 class="display-4"><?php echo $title; ?> forums</h1>
@@ -41,14 +61,17 @@
             <hr class="my-4">
             <p>This is a peer to peer forum for sharing knowledge with each other</p>
             <p>
-                <b>Posted by : Sonjoy</b>
+                Posted by : <b>Sonjoy</b>
             </p>
         </div>
     </div>
+    <?php
+        if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']==true){
 
-    <div class="container">
+    
+        echo'<div class="container">
         <h1 class="py-2">Post a Comment</h1>
-        <form action="<?php $_SERVER['REQUEST_URI']?>" method="POST" class="p-2 bg-light ">
+        <form action="'. $_SERVER['REQUEST_URI'].'" method="POST" class="p-2 bg-light ">
             
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Type your comment</label>
@@ -56,7 +79,22 @@
             </div>
             <button type="submit" class="btn btn-success">Post Comment</button>
         </form>
-    </div>
+    </div>';
+        }
+        else{
+            echo'<div class="container">
+        <h1 class="py-2">Post a Comment</h1>
+        <div class="alert alert-danger" role="alert">
+        You are not login. Please login to be able to post comments
+        </div>
+       
+        
+        
+         </div>';
+        }
+
+    ?>
+    
 
     <div class="container" id="ques">
         <h1 class="py-2">Discussions</h1>
@@ -69,13 +107,15 @@
         $noResult = false;
         $id = $row['comment_id'];
         $content = $row['comment_content'];
+        $comment_time = $row['comment_time'];
         
 
-        echo  '<div class="d-flex">
+        echo  '<div class="d-flex mt-1">
             <div class="flex-shrink-0">
                 <img src="img/user.png" class="rounded-circle" width="60px" alt="Sample Image">
             </div>
-            <div class="flex-grow-1 ms-3 my-3">
+            <div class="flex-grow-1 ms-3 ">
+            <p class="fw-bold my-0 fs-5">Anonymous User at <span class="fs-6 fw-light"> '.$comment_time.'</span></p>
                 
                 '.$content.'
             </div>

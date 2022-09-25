@@ -62,10 +62,11 @@
             </p>
         </div>
     </div>
-
-    <div class="container">
+    <?php
+    if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']==true){
+    echo '<div class="container">
         <h1 class="py-2">Start a Discussion</h1>
-        <form action="<?php $_SERVER['REQUEST_URI']?>" method="POST" class="p-2 bg-light border rounded-3">
+        <form action="'. $_SERVER['REQUEST_URI'].'" method="POST" class="p-2 bg-light border rounded-3">
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Problem Title</label>
                 <input type="text" class="form-control" id="title" name="title">
@@ -77,20 +78,35 @@
             </div>
             <button type="submit" class="btn btn-success">Submit</button>
         </form>
-    </div>
+    </div>';
+    }
+    else{
+        echo'<div class="container">
+        <h1 class="py-2">Start a Discussion</h1>
+        <div class="alert alert-primary" role="alert">
+        You are not login. Please login to be able to start a Discussion
+        </div>
+       
+        
+        
+         </div>';
+    }
+    ?>
+
 
     <div class="container" id="ques">
         <h1 class="py-2">Browse Questions</h1>
         <?php
     $id = $_GET['catid'];
     $noResult = true;
-    $sql = "SELECT * FROM `threads` WHERE thread_cat_id=$id";
+    $sql = "SELECT * FROM `threads` WHERE thread_cat_id=$id order by timestamp desc";
     $result = mysqli_query($conn, $sql);
     while($row = mysqli_fetch_assoc($result)){
     $noResult = false;
     $title = $row['thread_title'];
     $desc = $row['thread_desc'];
     $id = $row['thread_id'];
+    $thread_time = $row['timestamp'];
     
     
     
@@ -100,6 +116,7 @@
                 <img src="img/user.png" class="rounded-circle" width="60px" alt="Sample Image">
             </div>
             <div class="flex-grow-1 ms-3">
+            <p class="fw-bold my-0 fs-6">Anonymous User at <span class="fs-6 fw-light"> '.$thread_time.'</span></p>
                 <h5><a href="thread.php?threadid='. $id .'" class="text-dark text-decoration-none">'.$title.'</a><small class="text-muted"></small></h5>
                 <p>'.$desc.'</p>
             </div>
