@@ -54,7 +54,7 @@ $numRows_C = mysqli_num_rows($result_C);
     
 <div class="jumbotron">
   <div class="container text-center">
-    <h1>Admin Panel</h1>      
+    <h1>Admin Panel</h1>       
     <p>Welcome to Admin Panel</p>
   </div>
 </div>
