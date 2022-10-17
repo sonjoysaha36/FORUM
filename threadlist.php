@@ -38,7 +38,8 @@
         //Insert thread into db
         $th_title =$_POST['title'];
         $th_desc =$_POST['desc'];
-        $sql = "INSERT INTO `threads` ( `thread_title`, `thread_desc`, `thread_cat_id`, `thread_user_id`, `timestamp`) VALUES ( '$th_title', '$th_desc ', '$id', '0', current_timestamp())";
+        $sno = $_POST['sno'];
+        $sql = "INSERT INTO `threads` ( `thread_title`, `thread_desc`, `thread_cat_id`, `thread_user_id`, `timestamp`) VALUES ( '$th_title', '$th_desc ', '$id', '$sno', current_timestamp())";
         $result = mysqli_query($conn, $sql);
         $showAlert = true;
         if($showAlert){
@@ -72,6 +73,7 @@
                 <input type="text" class="form-control" id="title" name="title">
                 <small class="form-text text-muted">Keep your title short and crisp as possible</small>
             </div>
+            <input type="hidden" name="sno" value="'.$_SESSION['sno'].'">
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Ellaborate Your Concern</label>
                 <textarea class="form-control" id="desc" name="desc" rows="3"></textarea>
@@ -107,6 +109,10 @@
     $desc = $row['thread_desc'];
     $id = $row['thread_id'];
     $thread_time = $row['timestamp'];
+    $thread_user_id = $row['thread_user_id'];
+    $sql2 = "SELECT * FROM `users` WHERE sno = '$thread_user_id'";
+    $result2 = mysqli_query($conn, $sql2);
+    $row2 = mysqli_fetch_assoc($result2);
     
     
     
@@ -116,10 +122,11 @@
                 <img src="img/user.png" class="rounded-circle" width="60px" alt="Sample Image">
             </div>
             <div class="flex-grow-1 ms-3">
-            <p class="fw-bold my-0 fs-6">Anonymous User at <span class="fs-6 fw-light"> '.$thread_time.'</span></p>
+            
                 <h5><a href="thread.php?threadid='. $id .'" class="text-dark text-decoration-none">'.$title.'</a><small class="text-muted"></small></h5>
                 <p>'.$desc.'</p>
-            </div>
+            </div>'.'<p class="fw-bold my-0 fs-6">'.$row2['user_name'].' at <span class="fs-6 fw-light"> '.$thread_time.'</span></p>
+            
         </div>';
 
     }

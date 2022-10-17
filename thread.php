@@ -40,8 +40,9 @@
     if($method == 'POST'){
         //Insert thread into db
         $comment =$_POST['comment'];
+        $sno = $_POST['sno'];
        
-        $sql = "INSERT INTO `comments` ( `comment_content`, `thread_id`, `comment_by`, `comment_time`) VALUES ('$comment', '$id', '0', current_timestamp())";
+        $sql = "INSERT INTO `comments` ( `comment_content`, `thread_id`, `comment_by`, `comment_time`) VALUES ('$comment', '$id', '$sno', current_timestamp())";
         $result = mysqli_query($conn, $sql);
         $showAlert = true;
         if($showAlert){
@@ -50,6 +51,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';
         }
+
+        
     }
     ?>
 
@@ -61,10 +64,11 @@
             <hr class="my-4">
             <p>This is a peer to peer forum for sharing knowledge with each other</p>
             <p>
-                Posted by : <b>Sonjoy</b>
+                <!-- Posted by : <b><?php $row3['user_name'] ?></b> -->
             </p>
         </div>
     </div>
+    
     <?php
         if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']==true){
 
@@ -76,6 +80,7 @@
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Type your comment</label>
                 <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+                <input type="hidden" name="sno" value="'.$_SESSION['sno'].'">
             </div>
             <button type="submit" class="btn btn-success">Post Comment</button>
         </form>
@@ -108,6 +113,10 @@
         $id = $row['comment_id'];
         $content = $row['comment_content'];
         $comment_time = $row['comment_time'];
+        $thread_user_id = $row['comment_by'];
+        $sql2 = "SELECT * FROM `users` WHERE sno = '$thread_user_id'";
+        $result2 = mysqli_query($conn, $sql2);
+        $row2 = mysqli_fetch_assoc($result2);
         
 
         echo  '<div class="d-flex mt-1">
@@ -115,7 +124,7 @@
                 <img src="img/user.png" class="rounded-circle" width="60px" alt="Sample Image">
             </div>
             <div class="flex-grow-1 ms-3 ">
-            <p class="fw-bold my-0 fs-5">Anonymous User at <span class="fs-6 fw-light"> '.$comment_time.'</span></p>
+            <p class="fw-bold my-0 fs-5">'.$row2['user_name'].' at <span class="fs-6 fw-light"> '.$comment_time.'</span></p>
                 
                 '.$content.'
             </div>
