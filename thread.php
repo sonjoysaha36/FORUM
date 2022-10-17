@@ -52,8 +52,21 @@
                 </div>';
         }
 
+       
+
+    }   
         
-    }
+
+
+    ?>
+
+    <?php
+    $id2 = $_GET['threadid2'];
+    $sql3 = "SELECT threads.thread_id, threads.thread_title, users.user_name FROM `users` INNER JOIN `threads` ON users.sno = threads.thread_user_id WHERE threads.thread_user_id= $id2" ;
+    $result3 = mysqli_query($conn, $sql3);
+    $row3 = mysqli_fetch_assoc($result3);
+    
+    // echo $row3['user_name'];
     ?>
 
 
@@ -64,7 +77,7 @@
             <hr class="my-4">
             <p>This is a peer to peer forum for sharing knowledge with each other</p>
             <p>
-                <!-- Posted by : <b><?php $row3['user_name'] ?></b> -->
+                Posted by : <b><?php echo $row3['user_name']; ?></b>
             </p>
         </div>
     </div>

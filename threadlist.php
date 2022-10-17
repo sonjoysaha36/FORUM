@@ -113,6 +113,7 @@
     $sql2 = "SELECT * FROM `users` WHERE sno = '$thread_user_id'";
     $result2 = mysqli_query($conn, $sql2);
     $row2 = mysqli_fetch_assoc($result2);
+    $sno = $row2['sno'];
     
     
     
@@ -123,7 +124,7 @@
             </div>
             <div class="flex-grow-1 ms-3">
             
-                <h5><a href="thread.php?threadid='. $id .'" class="text-dark text-decoration-none">'.$title.'</a><small class="text-muted"></small></h5>
+                <h5><a href="thread.php?threadid='. $id .'&threadid2='.$sno.'" class="text-dark text-decoration-none">'.$title.'</a><small class="text-muted"></small></h5>
                 <p>'.$desc.'</p>
             </div>'.'<p class="fw-bold my-0 fs-6">'.$row2['user_name'].' at <span class="fs-6 fw-light"> '.$thread_time.'</span></p>
             
