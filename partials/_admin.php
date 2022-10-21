@@ -50,6 +50,11 @@ $numRows_T = mysqli_num_rows($result_T);
 $sqlC = "SELECT * FROM comments";
 $result_C = mysqli_query($conn, $sqlC);
 $numRows_C = mysqli_num_rows($result_C);
+
+$sqlf = "SELECT * FROM feedback";
+$result_f = mysqli_query($conn, $sqlf);
+$numRows_f = mysqli_num_rows($result_f);
+
 ?>
     
 <div class="jumbotron">
@@ -72,7 +77,7 @@ $numRows_C = mysqli_num_rows($result_C);
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="active"><a href="/forum/">Home</a></li>
-        <li><a href="#">Users Handle</a></li>
+        <li><a href="/forum/partials/_handleUser.php">Users Handle</a></li>
         <li><a href="#">Posts Handle</a></li>
         <li><a href="#">Comments Handle</a></li>
         
@@ -130,9 +135,9 @@ $numRows_C = mysqli_num_rows($result_C);
     </div>
     <div class="col-sm-4"> 
       <div class="panel panel-primary">
-        <div class="panel-heading">Loading...</div>
-        <div class="panel-body"><img src="/forum/img/crane.gif" class="img-thumbnail img-responsive" style="width:100%" alt="Image"></div>
-        <div class="panel-footer">Reload for update new information</div>
+        <div class="panel-heading">Feedback</div>
+        <div class="panel-body"><img src="/forum/img/message.gif" class="img-thumbnail img-responsive" style="width:100%" alt="Image"></div>
+        <div class="panel-footer">Total <?php echo $numRows_f ?> Feedback.Reload for update new Feedback</div>
       </div>
     </div>
   </div>

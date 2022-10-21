@@ -95,7 +95,7 @@
 
         <div class="container d-flex justify-content-around mt-4">
             <div class="card" style="width: 18rem;">
-                <img src="/forum/img/tonu.jfif" class="card-img-top" alt="...">
+                <img src="/forum/img/tonu.png" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h3 class="card-title text-center fw-semibold">Tonmoy Saha</h3>
                     <p class=" text-center fw-lighter">CO-Founder & CEO</p>
@@ -119,10 +119,10 @@
                 </div>
             </div>
             <div class="card" style="width: 18rem;">
-                <img src="/forum/img/mishok.png" width="200" height="195" class="card-img-top" alt="...">
+                <img src="/forum/img/mishuk.jfif" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h3 class="card-title text-center fw-semibold">Mishok Saha</h3>
-                    <p class=" text-center fw-lighter">Chief Product Officer</p>
+                    <p class=" text-center fw-lighter">CO-Founder & Vice-Chairman</p>
                     <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                     <p class="text-center fw-lighter">Fearlessly leads our engineering team and is
                         responsible for
