@@ -101,4 +101,13 @@ if(isset($_GET['loginsuccess']) && $_GET['loginsuccess']=="false"){
 </div>';
 }
 
+if(isset($_GET['feedback']) && $_GET['feedback']=="true")
+{
+  echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
+  <strong>Success!</strong> Thanks for your feedback.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>';
+
+}
+
 ?>
