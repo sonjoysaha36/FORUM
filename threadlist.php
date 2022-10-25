@@ -39,7 +39,8 @@
         $th_title =$_POST['title'];
         $th_desc =$_POST['desc'];
         $sno = $_POST['sno'];
-        $sql = "INSERT INTO `threads` ( `thread_title`, `thread_desc`, `thread_cat_id`, `thread_user_id`, `timestamp`) VALUES ( '$th_title', '$th_desc ', '$id', '$sno', current_timestamp())";
+        $code = $_POST['code'];
+        $sql = "INSERT INTO `threads` ( `thread_title`, `thread_desc`, `thread_cat_id`, `thread_user_id`, `timestamp`,`source_code`) VALUES ( '$th_title', '$th_desc ', '$id', '$sno', current_timestamp(),'$code')";
         $result = mysqli_query($conn, $sql);
         $showAlert = true;
         if($showAlert){
@@ -78,7 +79,15 @@
                 <label for="exampleFormControlTextarea1" class="form-label">Ellaborate Your Concern</label>
                 <textarea class="form-control" id="desc" name="desc" rows="3"></textarea>
             </div>
-            <button type="submit" class="btn btn-success">Submit</button>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Your Code</label>
+                <textarea class="form-control" id="code" name="code" rows="3"></textarea>
+            </div>';?>
+            <script src="/forum/ckeditor/ckeditor.js"></script>
+      <script>
+        CKEDITOR.replace('code');
+      </script>
+            <?php echo '<button type="submit" class="btn btn-success">Submit</button>
         </form>
     </div>';
     }

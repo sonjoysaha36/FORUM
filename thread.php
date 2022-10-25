@@ -29,6 +29,7 @@
     
     $title = $row['thread_title'];
     $desc = $row['thread_desc'];
+    $code = $row['source_code'];
     }
 
     ?>
@@ -69,11 +70,19 @@
     // echo $row3['user_name'];
     ?>
 
-
+<?php
+include 'partials/_viewCode.php';
+?>
     <div class="container my-4">
         <div class="jumbotron p-5 mb-4 bg-light border rounded-3">
             <h1 class="display-4"><?php echo $title; ?> forums</h1>
             <p class="lead"><?php echo $desc; ?></p>
+            <div>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  View Source Code
+</button>
+
+            </div>
             <hr class="my-4">
             <p>This is a peer to peer forum for sharing knowledge with each other</p>
             <p>
