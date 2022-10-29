@@ -7,7 +7,10 @@
     <title>Welcome to iDiscuss</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   
+   <style>
         #ques{
             min-height: 433px;
         }
@@ -22,58 +25,33 @@
     <?php
     $id = $_GET['threadid'];
     
-
-    $sql = "SELECT * FROM `threads` WHERE thread_id=$id";
+    $sql = "SELECT t.thread_title as title, t.thread_desc as description, t.source_code as code, u.user_name as username  FROM threads as t inner join users as u on t.thread_user_id = u.sno WHERE t.thread_id=$id";
     $result = mysqli_query($conn, $sql);
     while($row = mysqli_fetch_assoc($result)){
     
-    $title = $row['thread_title'];
-    $desc = $row['thread_desc'];
-    $code = $row['source_code'];
+    $title = $row['title'];
+    $desc = $row['description'];
+    $code = $row['code'];
+    $username= $row['username'];
     }
 
     ?>
 
 
-<?php
-    $showAlert = false;
-    $method = $_SERVER['REQUEST_METHOD'];
-    if($method == 'POST'){
-        //Insert thread into db
-        $comment =$_POST['comment'];
-        $sno = $_POST['sno'];
-       
-        $sql = "INSERT INTO `comments` ( `comment_content`, `thread_id`, `comment_by`, `comment_time`) VALUES ('$comment', '$id', '$sno', current_timestamp())";
-        $result = mysqli_query($conn, $sql);
-        $showAlert = true;
-        if($showAlert){
-            echo'<div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>Success! </strong> Your comment has been added! 
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>';
-        }
-
-       
-
-    }   
-        
-
-
-    ?>
-
-    <?php
-    $id2 = $_GET['threadid2'];
-    $sql3 = "SELECT threads.thread_id, threads.thread_title, users.user_name FROM `users` INNER JOIN `threads` ON users.sno = threads.thread_user_id WHERE threads.thread_user_id= $id2" ;
-    $result3 = mysqli_query($conn, $sql3);
-    $row3 = mysqli_fetch_assoc($result3);
-    
-    // echo $row3['user_name'];
-    ?>
 
 <?php
 include 'partials/_viewCode.php';
 ?>
     <div class="container my-4">
+<?php 
+if(isset($_SESSION['show_alert']) && $_SESSION['show_alert']){
+    echo'<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Success! </strong> Your comment has been added! 
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>';
+$_SESSION['show_alert'] = false;
+}?>
+
         <div class="jumbotron p-5 mb-4 bg-light border rounded-3">
             <h1 class="display-4"><?php echo $title; ?> forums</h1>
             <p class="lead"><?php echo $desc; ?></p>
@@ -86,7 +64,7 @@ include 'partials/_viewCode.php';
             <hr class="my-4">
             <p>This is a peer to peer forum for sharing knowledge with each other</p>
             <p>
-                Posted by : <b><?php echo $row3['user_name']; ?></b>
+                Posted by : <b><?php echo $username; ?></b>
             </p>
         </div>
     </div>
@@ -97,12 +75,13 @@ include 'partials/_viewCode.php';
     
         echo'<div class="container">
         <h1 class="py-2">Post a Comment</h1>
-        <form action="'. $_SERVER['REQUEST_URI'].'" method="POST" class="p-2 bg-light ">
+        <form action="./services/postsave.php" method="POST" class="p-2 bg-light ">
             
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Type your comment</label>
                 <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
                 <input type="hidden" name="sno" value="'.$_SESSION['sno'].'">
+                <input type="hidden" name="thread_id" value="'.$_GET['threadid'].'">
             </div>
             <button type="submit" class="btn btn-success">Post Comment</button>
         </form>
@@ -126,19 +105,21 @@ include 'partials/_viewCode.php';
     <div class="container mb-5" id="ques">
         <h1 class="py-2">Discussions</h1>
        <?php
-        $id = $_GET['threadid'];
-        $sql = "SELECT * FROM `comments` WHERE thread_id=$id";
+        $post_id = $_GET['threadid'];
+        $sql = "SELECT c.* , count(r.comment_id) as ratings_count from comments as  c left join comment_ratings as r on c.comment_id = r.comment_id where c.thread_id=$post_id  GROUP by  c.comment_id order by ratings_count desc";
         $result = mysqli_query($conn, $sql);
         $noResult = true;
         while($row = mysqli_fetch_assoc($result)){
         $noResult = false;
-        $id = $row['comment_id'];
+        $comment_id = $row['comment_id'];
         $content = $row['comment_content'];
         $comment_time = $row['comment_time'];
         $thread_user_id = $row['comment_by'];
+        $ratings_count = $row['ratings_count'];
         $sql2 = "SELECT * FROM `users` WHERE sno = '$thread_user_id'";
         $result2 = mysqli_query($conn, $sql2);
         $row2 = mysqli_fetch_assoc($result2);
+    
         
 
         echo  '<div class="d-flex mt-1">
@@ -146,7 +127,8 @@ include 'partials/_viewCode.php';
                 <img src="img/user.png" class="rounded-circle" width="60px" alt="Sample Image">
             </div>
             <div class="flex-grow-1 ms-3 ">
-            <p class="fw-bold my-0 fs-5">'.$row2['user_name'].' at <span class="fs-6 fw-light"> '.$comment_time.'</span></p>
+            <p class="fw-bold my-0 fs-5">'.$row2['user_name'].' at <span class="fs-6 fw-light"> '.$comment_time.'
+            </span><span class="badge bg-primary" id='."ratings_id_".$row['comment_id'].'>'.($ratings_count? $ratings_count:0).'</span>'.(isset($_SESSION['loggedin']) && ($_SESSION['loggedin']==true)?'<button class="btn" onClick="save('.$row['comment_id'].','.$post_id.','.$_SESSION['sno'].','.$row['comment_id'].')"><i class="fa fa-thumbs-up m-2" aria-hidden="true""></i></button>':"").'</p>
                 
                 '.$content.'
             </div>
@@ -178,16 +160,38 @@ include 'partials/_viewCode.php';
 
     </div>
 
-
-
-
-
-
-
     <?php include 'partials/_footer.php' ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous">
+    </script>
+
+
+    <script>
+      
+
+    function save(comment_id, post_id,user_id,ratings_ubq_id){
+        const ratings_id= document.getElementById(`ratings_id_${ratings_ubq_id}`);
+
+        $.ajax({
+            type: "POST",
+            url: 'ratings.php',
+            data: {
+                 post_id,
+                 comment_id,
+                 user_id // snake case
+            },
+            success: function(response)
+            {
+               if(response.success){
+                ratings_id.innerText=response.ratings_count;
+               }
+  
+           }
+       });
+    
+    }
+
     </script>
 </body>
 

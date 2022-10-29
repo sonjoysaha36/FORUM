@@ -25,7 +25,7 @@
     }
 
     .about-team-member {
-        width: 100%;
+        width: 20%;
         max-width: 24.2rem;
         margin: 5rem 1.6rem 0;
         display: flex;
