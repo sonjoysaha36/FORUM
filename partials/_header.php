@@ -1,6 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  
+
 <?php
  include_once '_db.php';
 session_start();
+
+
 
 echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 <div class="container-fluid">
@@ -51,6 +64,8 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       }
       else if(isset($_SESSION['loggedin']) && ($_SESSION['loggedin']==true) && ($_SESSION['userrole'] == "false")){
         echo '<P class="text-light my-0 mx-2  pt-2">Welcome '.$_SESSION['username'].'</P>;
+        <a href="/forum/_userProfile.php?profileid='.$_SESSION['sno'].'" class="btn btn-outline-success rounded-circle"><i class="fa fa-user"></i></a>
+        
         <a href="partials/_logout.php" class="btn btn-outline-success" >Logout</a>';
       }
         else{
@@ -129,3 +144,6 @@ if(isset($_GET['signupverify']) && $_GET['signupverify']=="false")
 }
 
 ?>
+
+</body>
+</html>
