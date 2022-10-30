@@ -7,15 +7,19 @@
     <title>Welcome to iDiscuss</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-   
-   <style>
-        #ques{
-            min-height: 433px;
-        }
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+        integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <style>
+    #ques {
+        min-height: 433px;
+    }
     </style>
-        <title>Welcome to iDiscuss - Coding Forums</title>
+    <title>Welcome to iDiscuss - Coding Forums</title>
 </head>
 
 <body>
@@ -39,11 +43,11 @@
 
 
 
-<?php
+    <?php
 include 'partials/_viewCode.php';
 ?>
     <div class="container my-4">
-<?php 
+        <?php 
 if(isset($_SESSION['show_alert']) && $_SESSION['show_alert']){
     echo'<div class="alert alert-success alert-dismissible fade show" role="alert">
     <strong>Success! </strong> Your comment has been added! 
@@ -56,9 +60,9 @@ $_SESSION['show_alert'] = false;
             <h1 class="display-4"><?php echo $title; ?> forums</h1>
             <p class="lead"><?php echo $desc; ?></p>
             <div>
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  View Source Code
-</button>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    View Source Code
+                </button>
 
             </div>
             <hr class="my-4">
@@ -68,7 +72,7 @@ $_SESSION['show_alert'] = false;
             </p>
         </div>
     </div>
-    
+
     <?php
         if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']==true){
 
@@ -81,8 +85,13 @@ $_SESSION['show_alert'] = false;
                 <label for="exampleFormControlTextarea1" class="form-label">Type your comment</label>
                 <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
                 <input type="hidden" name="sno" value="'.$_SESSION['sno'].'">
-                <input type="hidden" name="thread_id" value="'.$_GET['threadid'].'">
-            </div>
+                <input type="hidden" name="thread_id" value="'.$_GET['threadid'].'">';?>
+
+    <script src="/forum/ckeditor/ckeditor.js"></script>
+    <script>
+    CKEDITOR.replace('comment');
+    </script>
+    <?php echo ' </div>
             <button type="submit" class="btn btn-success">Post Comment</button>
         </form>
     </div>';
@@ -100,11 +109,11 @@ $_SESSION['show_alert'] = false;
         }
 
     ?>
-    
+
 
     <div class="container mb-5" id="ques">
         <h1 class="py-2">Discussions</h1>
-       <?php
+        <?php
         $post_id = $_GET['threadid'];
         $sql = "SELECT c.* , count(r.comment_id) as ratings_count from comments as  c left join comment_ratings as r on c.comment_id = r.comment_id where c.thread_id=$post_id  GROUP by  c.comment_id order by ratings_count desc";
         $result = mysqli_query($conn, $sql);
@@ -146,7 +155,7 @@ $_SESSION['show_alert'] = false;
 
         ?>
 
-        
+
         <!-- <div class="d-flex">
             <div class="flex-shrink-0">
                 <img src="img/user.png" class="rounded-circle" width="60px" alt="Sample Image">
@@ -168,30 +177,26 @@ $_SESSION['show_alert'] = false;
 
 
     <script>
-      
-
-    function save(comment_id, post_id,user_id,ratings_ubq_id){
-        const ratings_id= document.getElementById(`ratings_id_${ratings_ubq_id}`);
+    function save(comment_id, post_id, user_id, ratings_ubq_id) {
+        const ratings_id = document.getElementById(`ratings_id_${ratings_ubq_id}`);
 
         $.ajax({
             type: "POST",
             url: 'ratings.php',
             data: {
-                 post_id,
-                 comment_id,
-                 user_id // snake case
+                post_id,
+                comment_id,
+                user_id // snake case
             },
-            success: function(response)
-            {
-               if(response.success){
-                ratings_id.innerText=response.ratings_count;
-               }
-  
-           }
-       });
-    
-    }
+            success: function(response) {
+                if (response.success) {
+                    ratings_id.innerText = response.ratings_count;
+                }
 
+            }
+        });
+
+    }
     </script>
 </body>
 

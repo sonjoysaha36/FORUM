@@ -18,7 +18,7 @@
                         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputName" class="form-label">Full Name</label>
+                        <label for="exampleInputName" class="form-label">User Name</label>
                         <input type="Name" class="form-control" id="name" name="name">
                         
                     </div>

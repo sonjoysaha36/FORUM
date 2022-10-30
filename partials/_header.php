@@ -110,4 +110,22 @@ if(isset($_GET['feedback']) && $_GET['feedback']=="true")
 
 }
 
+if(isset($_GET['signupverify']) && $_GET['signupverify']=="true")
+{
+  echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
+  <strong>Please!</strong> Check Your Email.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>';
+
+}
+
+if(isset($_GET['signupverify']) && $_GET['signupverify']=="false")
+{
+  echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
+  <strong>Somthing Wrong!</strong> Try again.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>';
+
+}
+
 ?>

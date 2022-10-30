@@ -16,7 +16,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         
         
         $row['user_name'] == $uname;
-        if($row['user_role']== 2){
+        if($row['user_role']== 2 ){
         //     $check = "true";
         $check = "true";
         
@@ -27,7 +27,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
      
         
         
-           if(password_verify($pass, $row['user_pass'])){
+           if(password_verify($pass, $row['user_pass']) && $row['verified']==1){
             
             
             session_start();
