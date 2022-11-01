@@ -60,7 +60,7 @@
             <hr class="my-4">
             <p>This is a peer to peer forum for sharing knowledge with each other</p>
             <p class="lead">
-                <a class="btn btn-success btn-lg" href="#" role="button">Learn more</a>
+                <a class="btn btn-success btn-lg" href="about.php" role="button">Learn more</a>
             </p>
         </div>
     </div>

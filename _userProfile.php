@@ -59,7 +59,7 @@ $sql = "SELECT * FROM `users` WHERE sno=$id";
                     
                     <li><a href="#">'.$uemail.'</a> </li>
                     <li><a href="#">'.$uaddress.'</a> </li>
-                    <li><a class="btn btn-outline-success" href="/forum/myPost.php?profileid='.$_SESSION['sno'].'">My Post</a> </li>
+                    <li><a class="btn btn-outline-success" href="/forum/mypost.php?profileid='.$_SESSION['sno'].'">My Post</a> </li>
                     
                     <button class="btn btn-outline-success"  data-bs-toggle="modal" data-bs-target="#editmodal">Edit</button>
 
