@@ -23,8 +23,10 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true || $_SESSION['us
     exit;
 }
  include("_db.php");
+ $noresults = true;
+ $query = $_GET['search'];
 
-    $sql = "SELECT * FROM `users` where user_role=1 && verified=1";
+    $sql = "SELECT * FROM users WHERE verified=1 && MATCH (user_email, user_name) against ('$query')";
     $result = mysqli_query($conn, $sql);
     
 
@@ -33,23 +35,23 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true || $_SESSION['us
     <?php
 include("_adminNav.php");
 
-if(isset($_GET['value']) && $_GET['value']=="true")
-{
-  echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
-  <strong>Success!</strong> User Successfully Remove User.
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>';
+// if(isset($_GET['value']) && $_GET['value']=="true")
+// {
+//   echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
+//   <strong>Success!</strong> User Successfully Remove User.
+//   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+// </div>';
 
-}
+// }
 
-if(isset($_GET['value']) && $_GET['value']=="false")
-{
-  echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
-  <strong>error!</strong> Please try again.
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>';
+// if(isset($_GET['value']) && $_GET['value']=="false")
+// {
+//   echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
+//   <strong>error!</strong> Please try again.
+//   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+// </div>';
 
-}
+// }
 
 ?>
     <div class="d-flex justify-content-center mt-4">

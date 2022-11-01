@@ -57,7 +57,7 @@
         
 
         echo '<div class="result mt-3">
-        <h3><a href="thread.php?threadid='. $thread_id .'" class="text-dark text-decoration-none"> '.$title.'</a></h3>
+        <h3><a href="/forum/thread.php?threadid='. $thread_id .'" class="text-dark text-decoration-none"> '.$title.'</a></h3>
         <p>'.$desc.'</p>
 
         <a class="btn btn-danger" href="_deletepost.php?id='.$thread_id.'">Delete</a>
