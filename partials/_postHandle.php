@@ -7,12 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
-        .container{
-            min-height: 95vh;
-        }
+    .container {
+        min-height: 95vh;
+    }
     </style>
-   
-    
+
+
 </head>
 
 <body>
@@ -24,7 +24,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true || $_SESSION['us
 }
  include("_db.php");
 
-    $sql = "SELECT * FROM `users` where user_role=1 && verified=1";
+    $sql = "SELECT * FROM `threads` where verify=1";
     $result = mysqli_query($conn, $sql);
     
 
@@ -36,7 +36,7 @@ include("_adminNav.php");
 if(isset($_GET['value']) && $_GET['value']=="true")
 {
   echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
-  <strong>Success!</strong> User Successfully Remove User.
+  <strong>Success!</strong> Successfully Remove Post .
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>';
 
@@ -50,15 +50,23 @@ if(isset($_GET['value']) && $_GET['value']=="false")
 </div>';
 
 }
+
 ?>
+    <div class="d-flex justify-content-center mt-4">
+    <form class="d-flex" method="get" action="_postSearch.php" role="search">
+        <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-success" type="submit">Search</button>
+    </form>
+    </div>
+
     <div class="container">
         <table class="table mt-3">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">sno</th>
-                    <th scope="col">email</th>
+                    <th scope="col">Thread Title</th>
+                    <th scope="col">Thread Desc</th>
                     <th scope="col">timestamp</th>
-                    <th scope="col">user_name</th>
+                    <th scope="col">Thread Id</th>
 
                     <th scope="col text-center" colspan="2">Actions</th>
                 </tr>
@@ -68,13 +76,14 @@ if(isset($_GET['value']) && $_GET['value']=="false")
                 <?php while($row = mysqli_fetch_assoc($result)){ ?>
 
                 <tr>
-                    <td> <?php echo $row["sno"]; ?></td>
-                    <td> <?php echo $row["user_email"]; ?></td>
+                    <td> <?php echo $row["thread_title"]; ?></td>
+                    <td> <?php echo $row["thread_desc"]; ?></td>
                     <td> <?php echo $row["timestamp"]; ?></td>
-                    <td> <?php echo $row["user_name"]; ?></td>
+                    <td> <?php echo $row["thread_id"]; ?></td>
 
 
-                    <td><a class="btn btn-danger" href="_deleteUser.php?id=<?php echo $row["sno"]; ?>">Delete</a></td>
+                    <td><a class="btn btn-danger" href="_deletepost.php?id=<?php echo $row["thread_id"]; ?>">Delete</a>
+                    </td>
                 </tr>
                 <?php } ?>
 

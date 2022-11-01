@@ -78,8 +78,9 @@ $numRows_f = mysqli_num_rows($result_f);
       <ul class="nav navbar-nav">
         <li class="active"><a href="/forum/">Home</a></li>
         <li><a href="/forum/partials/_handleUser.php">Users Handle</a></li>
-        <li><a href="#">Posts Handle</a></li>
-        <li><a href="#">Comments Handle</a></li>
+        <li><a href="/forum/partials/_postHandle.php">Posts Handle</a></li>
+        <li><a href="/forum/services/_feedbackWatch.php">Watch Feedback</a></li>
+        <!-- <li><a href="#">Comments Handle</a></li> -->
         
       </ul>
       <ul class="nav navbar-nav navbar-right">

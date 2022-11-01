@@ -11,7 +11,7 @@
         $thread_id= $_POST['thread_id'];
        
         print_r($_POST);
-        $sql = "INSERT INTO `comments` ( `comment_content`, `thread_id`, `comment_by`, `comment_time`) VALUES ('$comment', '$thread_id', '$sno', current_timestamp())";
+        $sql = "INSERT INTO `comments` ( `comment_content`, `thread_id`, `comment_by`, `comment_time`, `verify`) VALUES ('$comment', '$thread_id', '$sno', current_timestamp(), '1')";
         $result = mysqli_query($conn, $sql);
         $showAlert = true;
      

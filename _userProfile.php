@@ -14,11 +14,16 @@
     </script>
 
     <link rel="stylesheet" href="/forum/partials/desing.css">
+    <style>
+    #maincontainer {
+        min-height: 98vh;
+    }
+    </style>
     <title>profile</title>
 </head>
 
 <body>
-<?php
+    <?php
 $id = $_GET['profileid'];
 include "partials/_db.php";
 $sql = "SELECT * FROM `users` WHERE sno=$id";
@@ -27,13 +32,22 @@ $sql = "SELECT * FROM `users` WHERE sno=$id";
     $uname = $row['user_name'];
     $uemail = $row['user_email'];
     }
+    $sql2 = "SELECT * FROM `user_info` WHERE uid=$id";
+    $result2 = mysqli_query($conn, $sql2);
+    while($row2 = mysqli_fetch_assoc($result2)){
+    $uaddress = $row2['uaddress'];
+    $uphone = $row2['phone'];
+    $uabout = $row2['uabout'];
+    $fname = $row2['uname'];
 
+    
+    }
 
 ?>
     <?php include 'partials/_header.php' ?>
 
 
-    <div class="container">
+    <div class="container" id="maincontainer">
         <div class="row">
             <div class="col-md-6">
                 <?php
@@ -43,9 +57,11 @@ $sql = "SELECT * FROM `users` WHERE sno=$id";
                     <li><a href="#">Home</a> </li>
                     <!-- <li><a href="#">About</a> </li> -->
                     
-                    <li><a href="#">01122334</a> </li>
-                    <li><a href="#">Dhaka,Bangladesh</a> </li>
-                    <li><a href="/forum/myPost.php?profileid='.$_SESSION['sno'].'">My Post</a> </li>
+                    <li><a href="#">'.$uemail.'</a> </li>
+                    <li><a href="#">'.$uaddress.'</a> </li>
+                    <li><a class="btn btn-outline-success" href="/forum/myPost.php?profileid='.$_SESSION['sno'].'">My Post</a> </li>
+                    
+                    <button class="btn btn-outline-success"  data-bs-toggle="modal" data-bs-target="#editmodal">Edit</button>
 
 
                 </div>';
@@ -61,7 +77,7 @@ $sql = "SELECT * FROM `users` WHERE sno=$id";
                                 Name
                             </div>
                             <div class="col-4">
-                                <?php echo $uname; ?>
+                                <?php echo $fname; ?>
                             </div>
                         </div>
                     </div>
@@ -70,22 +86,65 @@ $sql = "SELECT * FROM `users` WHERE sno=$id";
                     <div class="details">
                         <div class="row">
                             <div class="col-8">
-                                Email
+                                Phone
                             </div>
                             <div class="col-4">
-                                <?php echo $uemail; ?>
+                                <?php echo $uphone; ?>
                             </div>
                         </div>
                     </div>
                 </div>
-                <h2 class="mt-5">About me</h2>
+                <h2 class="mt-5">About Me</h2>
                 <p class="text-justify">
-                    
+                    <?php echo $uabout; ?>
                 </p>
             </div>
         </div>
     </div>
     <?php include 'partials/_footer.php' ?>
+
+    <div class="modal fade" id="editmodal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Edit Your Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <?php echo '<form action="/forum/services/_editProfile.php?profileid='.$_SESSION['sno'].'" method="POST">' ?>
+                    <div class="modal-body">
+                        <div class="row mt-2">
+                            <div class="col-md-12"><label class="labels">Name</label><input type="text" name="name"
+                                    class="form-control" placeholder="enter your name" value=""></div>
+
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12"><label class="labels">Mobile Number</label><input type="number" name="number"
+                                    class="form-control" placeholder="enter phone number" value=""></div>
+                            <div class="col-md-12"><label class="labels">Address</label><input type="text" name="address"
+                                    class="form-control" placeholder="enter address" value=""></div>
+
+                            <div class="col-md-12"><label class="labels">About me</label><textarea type="text"
+                                    name="about" class="form-control" placeholder="write down yourself" rows="3"
+                                    value=""></textarea></div>
+
+                            <script src="/forum/ckeditor/ckeditor.js"></script>
+                            <script>
+                            CKEDITOR.replace('about');
+                            </script>
+
+
+
+                        </div>
+                        <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                    
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

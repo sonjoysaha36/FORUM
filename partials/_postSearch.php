@@ -1,4 +1,4 @@
-
+<?php session_start() ?>
 <!doctype html>
 <html lang="en">
 
@@ -19,8 +19,8 @@
 </head>
 
 <body>
-    <?php include 'partials/_header.php' ?>
-    <?php include 'partials/_db.php' ?>
+    <?php include '_adminNav.php' ?>
+    <?php include '_db.php' ?>
 
     
 
@@ -46,13 +46,10 @@
         
 
         
-        $sql3 = "SELECT threads.thread_id, threads.thread_title,threads.thread_user_id, users.user_name, users.user_role FROM `users` INNER JOIN `threads` ON users.sno = threads.thread_user_id" ;
-        $result3 = mysqli_query($conn, $sql3);
-        $row3 = mysqli_fetch_assoc($result3);
-        $threadid = $row3['thread_user_id'];
-
-
-        $role = $row3['user_role'];
+        // $sql3 = "SELECT threads.thread_id, threads.thread_title,threads.thread_user_id, users.user_name FROM `users` INNER JOIN `threads` ON users.sno = threads.thread_user_id" ;
+        // $result3 = mysqli_query($conn, $sql3);
+        // $row3 = mysqli_fetch_assoc($result3);
+        // $threadid = $row3['thread_user_id'];
         
         
 
@@ -62,12 +59,10 @@
         echo '<div class="result mt-3">
         <h3><a href="thread.php?threadid='. $thread_id .'" class="text-dark text-decoration-none"> '.$title.'</a></h3>
         <p>'.$desc.'</p>
-        ';
-        // if($_SESSION['userrole']== true){
-        //     echo '<a class="btn btn-danger" href="_deletepost.php?id=">Delete</a>';
-        // }
+
+        <a class="btn btn-danger" href="_deletepost.php?id='.$thread_id.'">Delete</a>
         
-   echo ' </div>';
+    </div>';
         }
         if($noresults){
             echo '<div class="jumbotron jumbotron-fluid p-5 mb-4 bg-light border rounded-3">
@@ -91,7 +86,7 @@
     
 
 
-    <?php include 'partials/_footer.php' ?>
+    <?php include '_footer.php' ?>
 
 
 

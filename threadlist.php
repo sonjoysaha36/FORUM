@@ -40,7 +40,7 @@
         $th_desc =$_POST['desc'];
         $sno = $_POST['sno'];
         $code = $_POST['code'];
-        $sql = "INSERT INTO `threads` ( `thread_title`, `thread_desc`, `thread_cat_id`, `thread_user_id`, `timestamp`,`source_code`) VALUES ( '$th_title', '$th_desc ', '$id', '$sno', current_timestamp(),'$code')";
+        $sql = "INSERT INTO `threads` ( `thread_title`, `thread_desc`, `thread_cat_id`, `thread_user_id`, `timestamp`,`source_code`,`verify`) VALUES ( '$th_title', '$th_desc ', '$id', '$sno', current_timestamp(),'$code','1')";
         $result = mysqli_query($conn, $sql);
         $showAlert = true;
         if($showAlert){
@@ -110,7 +110,7 @@
         <?php
     $id = $_GET['catid'];
     $noResult = true;
-    $sql = "SELECT * FROM `threads` WHERE thread_cat_id=$id order by timestamp desc";
+    $sql = "SELECT * FROM `threads` WHERE thread_cat_id=$id && verify=1 order by timestamp desc";
     $result = mysqli_query($conn, $sql);
     while($row = mysqli_fetch_assoc($result)){
     $noResult = false;

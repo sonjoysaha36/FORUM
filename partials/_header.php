@@ -44,7 +44,7 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         '</ul>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="contact.php">contact</a>
+        <a class="nav-link " href="contact.php">Contact</a>
       </li>
       
     </ul>';
@@ -58,13 +58,15 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     
       <div class=" mx-2 d-flex flex-row">';
       if(isset($_SESSION['loggedin']) && ($_SESSION['loggedin']==true) && ($_SESSION['userrole'] == "true")){
-        echo '<P class="text-light my-0 mx-2  pt-2">Welcome '.$_SESSION['username'].'</P>;
+        echo '<P class="text-light my-0 mx-2  pt-2">Welcome '.$_SESSION['username'].'</P>
+        <a href="/forum/_userProfile.php?profileid='.$_SESSION['sno'].'" class="btn btn-outline-success mx-2  pt-2" ><i class="fa fa-user"></i></a>
         <a href="partials/_admin.php" class="btn btn-outline-success mx-2  pt-2" >Admin</a>
         <a href="partials/_logout.php" class="btn btn-outline-success" >Logout</a>';
       }
       else if(isset($_SESSION['loggedin']) && ($_SESSION['loggedin']==true) && ($_SESSION['userrole'] == "false")){
-        echo '<P class="text-light my-0 mx-2  pt-2">Welcome '.$_SESSION['username'].'</P>;
-        <a href="/forum/_userProfile.php?profileid='.$_SESSION['sno'].'" class="btn btn-outline-success rounded-circle"><i class="fa fa-user"></i></a>
+        echo '<P class="text-light my-0 mx-2  pt-2">Welcome '.$_SESSION['username'].'</P>
+        
+        <a href="/forum/_userProfile.php?profileid='.$_SESSION['sno'].'" class="btn btn-outline-success mx-2  pt-2" ><i class="fa fa-user"></i></a>
         
         <a href="partials/_logout.php" class="btn btn-outline-success" >Logout</a>';
       }

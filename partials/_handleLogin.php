@@ -16,6 +16,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         
         
         $row['user_name'] == $uname;
+        $role = $row['user_role'];
         if($row['user_role']== 2 ){
         //     $check = "true";
         $check = "true";
@@ -36,6 +37,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $_SESSION['useremail'] = $email;
             $_SESSION['userrole'] = $check;
             $_SESSION['username'] = $uname;
+            $_SESSION['role'] = $role;
             // echo "logged id" .$email;
             header("location: /forum/index.php");
             exit();

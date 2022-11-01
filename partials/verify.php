@@ -6,6 +6,7 @@ if(isset ($_GET['vkey'])){
 
 $sql = "Select * from users where verified = 0 and vkey='$vkey'";
 $result = mysqli_query($conn, $sql);
+$row2 = mysqli_fetch_assoc($result);
 $numRows = mysqli_num_rows($result);
 if($numRows == 1){
 
@@ -22,7 +23,15 @@ if($numRows == 1){
 
 
     if($conn->query($update)){
+        $id = $row2['sno'];
+        $name = $row2['user_name'];
+        $email = $row2['user_email'];
         // echo "Your account has been verified";
+
+        $sql2 = "INSERT INTO `user_info` ( `uid`, `uname`, `uemail`) VALUES ( '$id', '$name ', '$email')";
+        $result = mysqli_query($conn, $sql2);
+
+
         header("location: /forum/index.php?signupsuccess=true");
             exit(); 
     }

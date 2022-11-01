@@ -18,6 +18,9 @@
     #ques {
         min-height: 433px;
     }
+    #btn{
+        max-height: 50px;
+    }
     </style>
     <title>Welcome to iDiscuss - Coding Forums</title>
 </head>
@@ -115,7 +118,7 @@ $_SESSION['show_alert'] = false;
         <h1 class="py-2">Discussions</h1>
         <?php
         $post_id = $_GET['threadid'];
-        $sql = "SELECT c.* , count(r.comment_id) as ratings_count from comments as  c left join comment_ratings as r on c.comment_id = r.comment_id where c.thread_id=$post_id  GROUP by  c.comment_id order by ratings_count desc";
+        $sql = "SELECT c.* , count(r.comment_id) as ratings_count from comments as  c left join comment_ratings as r on c.comment_id = r.comment_id where c.thread_id=$post_id AND c.verify=1 GROUP by  c.comment_id order by ratings_count desc";
         $result = mysqli_query($conn, $sql);
         $noResult = true;
         while($row = mysqli_fetch_assoc($result)){
@@ -140,8 +143,12 @@ $_SESSION['show_alert'] = false;
             </span><span class="badge bg-primary" id='."ratings_id_".$row['comment_id'].'>'.($ratings_count? $ratings_count:0).'</span>'.(isset($_SESSION['loggedin']) && ($_SESSION['loggedin']==true)?'<button class="btn" onClick="save('.$row['comment_id'].','.$post_id.','.$_SESSION['sno'].','.$row['comment_id'].')"><i class="fa fa-thumbs-up m-2" aria-hidden="true""></i></button>':"").'</p>
                 
                 '.$content.'
-            </div>
-        </div>';
+            </div>'
+            .(isset($_SESSION['loggedin']) && ($_SESSION['loggedin']==true) && ($_SESSION['userrole'] == "true")?'<a href="partials/_commentDelete.php?threadid='.$id.'&&commentid='.$comment_id.'" class="btn btn-outline-success mx-2  pt-2" id="btn"  ><i class="fa fa-trash m-2" aria-hidden="true""></i></a>':"").'
+              
+        </div>'
+        ;
+        
         }
 
         if($noResult==true){
