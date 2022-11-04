@@ -97,9 +97,18 @@ if(isset($_GET['value']) && $_GET['value']=="false")
 
                     <td><a class="btn btn-success"
                             href="/forum/thread.php?threadid=<?php echo $row["thread_id"]; ?>">Go</a></td>
+                            <?php if(isset($_SESSION['loggedin']) && ($_SESSION['loggedin']==true) && ($_SESSION['sno'] == $id))
+                    echo'
+                    <div>
+                    
                     <td><a class="btn btn-danger"
-                            href="/forum/services/_userPostDelete.php?threadid=<?php echo $row["thread_id"]; ?>&userid=<?php echo $id;?>">Delete</a>
+                            href="/forum/services/_userPostDelete.php?threadid='.$row["thread_id"].'&userid='.$id.'">Delete</a>
                     </td>
+
+                </div>';?>
+                    <!-- <td><a class="btn btn-danger"
+                            href="/forum/services/_userPostDelete.php?threadid=<?php echo $row["thread_id"]; ?>&userid=<?php echo $id;?>">Delete</a>
+                    </td> -->
                 </tr>
                 <?php } ?>
 

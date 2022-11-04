@@ -123,13 +123,19 @@
     $result2 = mysqli_query($conn, $sql2);
     $row2 = mysqli_fetch_assoc($result2);
     $sno = $row2['sno'];
+
+    $sql3 = "SELECT * from `user_info` where uid ='$thread_user_id'";
+    $result3 = mysqli_query($conn, $sql3);
+    $row3 = mysqli_fetch_assoc($result3);
+
+    $profile_image_name= $row3['profile_pic'] ? "images/".$row3['profile_pic'] : "img/user.png";
     
     
     
     
       echo  '<div class="d-flex">
             <div class="flex-shrink-0">
-                <img src="img/user.png" class="rounded-circle" width="60px" alt="Sample Image">
+                <img src="'.$profile_image_name.'" class="rounded-circle" width="50px" height="50px" alt="Sample Image">
             </div>
             <div class="flex-grow-1 ms-3">
             

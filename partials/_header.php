@@ -1,3 +1,10 @@
+<?php 
+ if(!isset($_SESSION)) 
+ { 
+     session_start(); 
+ } 
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +18,6 @@
 
 <?php
  include_once '_db.php';
-session_start();
 
 
 

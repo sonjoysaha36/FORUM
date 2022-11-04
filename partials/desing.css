@@ -1,7 +1,14 @@
+#profile-links{
+  background-color: #222426 !important;
+}
+.badge img{
+  width: 70px;
+  
+}
 .profile-links
 
 {
-  background-color: #22c7f0;
+  background-color: #222426;
   padding: 30px 50px;
   text-align: center;
   margin: 80px 100px 0px 100px;
@@ -57,7 +64,7 @@
 .profile-links
 
 {
-  background-color: #4f4e4a;
+  background-color: #222426;
   padding: 30px 50px;
   text-align: center;
   margin: 80px 50px 0px 50px;
@@ -76,7 +83,7 @@
 .profile-links
 
 {
-  background-color: #22c7f0;
+  background-color: #222426;
   padding: 30px 50px;
   text-align: center;
   margin: 40px 0px 0px 0px;
@@ -106,3 +113,25 @@
   padding: 10px;
 }
 }
+
+@media (max-width:500px)
+{
+ 
+.profile-links li
+
+{
+  margin: 0;
+
+}
+.profile-links img
+
+{
+  margin-bottom: 2px;
+
+}
+.mt-custum .details 
+{
+  padding: 2px;
+}
+}
+

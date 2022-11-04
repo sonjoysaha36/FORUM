@@ -18,7 +18,8 @@
     #ques {
         min-height: 433px;
     }
-    #btn{
+
+    #btn {
         max-height: 50px;
     }
     </style>
@@ -131,22 +132,31 @@ $_SESSION['show_alert'] = false;
         $sql2 = "SELECT * FROM `users` WHERE sno = '$thread_user_id'";
         $result2 = mysqli_query($conn, $sql2);
         $row2 = mysqli_fetch_assoc($result2);
-    
+        $sql3 = "SELECT * from `user_info` where uid ='$thread_user_id'";
+        $result3 = mysqli_query($conn, $sql3);
+        $row3 = mysqli_fetch_assoc($result3);
+
+        $profile_image_name= $row3['profile_pic'] ? "images/".$row3['profile_pic'] : "img/user.png";
         
 
         echo  '<div class="d-flex mt-1">
             <div class="flex-shrink-0">
-                <img src="img/user.png" class="rounded-circle" width="60px" alt="Sample Image">
+                <img src="'.$profile_image_name.'" class="rounded-circle" class="rounded-circle" width="50px" height="50px" alt="Sample Image">
             </div>
             <div class="flex-grow-1 ms-3 ">
-            <p class="fw-bold my-0 fs-5">'.$row2['user_name'].' at <span class="fs-6 fw-light"> '.$comment_time.'
-            </span><span class="badge bg-primary" id='."ratings_id_".$row['comment_id'].'>'.($ratings_count? $ratings_count:0).'</span>'.(isset($_SESSION['loggedin']) && ($_SESSION['loggedin']==true)?'<button class="btn" onClick="save('.$row['comment_id'].','.$post_id.','.$_SESSION['sno'].','.$row['comment_id'].')"><i class="fa fa-thumbs-up m-2" aria-hidden="true""></i></button>':"").'</p>
+            <p class="fw-bold my-0 fs-5"><a href="_userProfile.php?profileid='.$row2['sno'].'" class="text-dark text-decoration-none">'.$row2['user_name'].'</a> at <span class="fs-6 fw-light"> '.$comment_time.'
+            </span><span class="badge rounded-pill bg-light text-dark" id='."ratings_id_".$row['comment_id'].'>'.($ratings_count? $ratings_count:0).'</span>'.'</p>
                 
                 '.$content.'
-            </div>'
+            </div>
+            <div>'
+            
+            .(isset($_SESSION['loggedin']) && ($_SESSION['loggedin']==true)?'<button class="btn  btn-outline-success" id="btn" onClick="save('.$row['comment_id'].','.$post_id.','.$_SESSION['sno'].','.$row['comment_id'].')"><i class="fa fa-thumbs-up m-2 " aria-hidden="true""></i></button>':"")
             .(isset($_SESSION['loggedin']) && ($_SESSION['loggedin']==true) && ($_SESSION['userrole'] == "true")?'<a href="partials/_commentDelete.php?threadid='.$id.'&&commentid='.$comment_id.'" class="btn btn-outline-success mx-2  pt-2" id="btn"  ><i class="fa fa-trash m-2" aria-hidden="true""></i></a>':"").'
               
-        </div>'
+        
+            </div>
+                </div>'
         ;
         
         }
