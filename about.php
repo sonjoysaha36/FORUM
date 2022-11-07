@@ -25,7 +25,7 @@
     }
 
     .about-team-member {
-        width: 20%;
+        width: 100%;
         max-width: 24.2rem;
         margin: 5rem 1.6rem 0;
         display: flex;
@@ -76,9 +76,7 @@
         <div class="container">
             <h1 class="text-center pb-4 text-light">iDiscuss</span></h1>
             <div class="d-flex p-2 text-light mx-5 justify"><span class="fs-5">iDiscuss people find the answers they
-                    need, when they need them. We're best known for our public Q&A platform that over 100 million people
-                    visit every month to ask questions, learn, and share technical knowledge.
-
+                    need, when they need them. We're best known for our public Q&A platform. 
                     Our products and tools empower people to find what they need to develop technology at work or at
                     home.</span></div>
         </div>
@@ -94,7 +92,7 @@
         <h1 class="text-center  pb-4">Meet Our <span class="text-primary">Leadership</span></h1>
 
         <div class="container d-flex justify-content-around mt-4">
-            <div class="card" style="width: 18rem;">
+            <!-- <div class="card" style="width: 18rem;">
                 <img src="/forum/img/tonu.png" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h3 class="card-title text-center fw-semibold">Tonmoy Saha</h3>
@@ -104,8 +102,7 @@
                         including product
                         development and global sales</p>
                     <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                </div>
-            </div>
+                
             <div class="card" style="width: 18rem;">
                 <img src="/forum/img/sonjoy.png" class="card-img-top" alt="...">
                 <div class="card-body">

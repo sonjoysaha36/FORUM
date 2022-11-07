@@ -24,7 +24,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="signupPassword" name="signupPassword">
+                        <input type="password" class="form-control" id="signupPassword" name="signupPassword" minlength="4" required>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Confirm Password</label>
